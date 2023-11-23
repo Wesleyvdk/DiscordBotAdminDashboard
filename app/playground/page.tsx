@@ -1,50 +1,65 @@
-'use client';
+'use server';
 
 import { Card, Metric, Text, Title, BarList, Flex, Grid } from '@tremor/react';
 import Chart from './chart';
+import { queryBuilder } from '../../lib/planetscale';
 
-const website = [
-  { name: '/home', value: 1230 },
-  { name: '/contact', value: 751 },
-  { name: '/gallery', value: 471 },
-  { name: '/august-discount-offer', value: 280 },
-  { name: '/case-studies', value: 78 }
-];
+interface Command {
+  command_id: number;
+  command_name: string;
+  category: string;
+  usage_count: number;
+  last_used: Date;
+}
 
-const shop = [
-  { name: '/home', value: 453 },
-  { name: '/imprint', value: 351 },
-  { name: '/shop', value: 271 },
-  { name: '/pricing', value: 191 }
-];
+interface CommandSummary {
+  name: string;
+  value: number;
+}
 
-const app = [
-  { name: '/shop', value: 789 },
-  { name: '/product-features', value: 676 },
-  { name: '/about', value: 564 },
-  { name: '/login', value: 234 },
-  { name: '/downloads', value: 191 }
-];
+interface CategoryData {
+  category: string;
+  stat: string;
+  data: CommandSummary[];
+}
 
-const data = [
-  {
-    category: 'Website',
-    stat: '10,234',
-    data: website
-  },
-  {
-    category: 'Online Shop',
-    stat: '12,543',
-    data: shop
-  },
-  {
-    category: 'Mobile App',
-    stat: '2,543',
-    data: app
-  }
-];
+export default async function PlaygroundPage() {
+  const commands: Command[] = await queryBuilder
+    .selectFrom('bot_commands')
+    .select([
+      'command_id',
+      'command_name',
+      'category',
+      'usage_count',
+      'last_used'
+    ])
+    .orderBy('usage_count', 'desc')
+    .execute();
+  const categoryMap = new Map<
+    string,
+    { totalUsage: number; commands: CommandSummary[] }
+  >();
 
-export default function PlaygroundPage() {
+  commands.forEach((command) => {
+    if (!categoryMap.has(command.category)) {
+      categoryMap.set(command.category, { totalUsage: 0, commands: [] });
+    }
+    const categoryData = categoryMap.get(command.category);
+    categoryData?.commands.push({
+      name: command.command_name,
+      value: command.usage_count
+    });
+    categoryData!.totalUsage += command.usage_count;
+  });
+
+  const data: CategoryData[] = Array.from(categoryMap).map(
+    ([category, { totalUsage, commands }]) => ({
+      category: category,
+      stat: totalUsage.toString(),
+      data: commands
+    })
+  );
+
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
       <Grid numItemsSm={2} numItemsLg={3} className="gap-6">
@@ -57,11 +72,11 @@ export default function PlaygroundPage() {
               className="space-x-2"
             >
               <Metric>{item.stat}</Metric>
-              <Text>Total views</Text>
+              <Text>Total Times Used</Text>
             </Flex>
             <Flex className="mt-6">
-              <Text>Pages</Text>
-              <Text className="text-right">Views</Text>
+              <Text>Commands</Text>
+              <Text className="text-right">Times Used</Text>
             </Flex>
             <BarList
               data={item.data}
@@ -73,7 +88,7 @@ export default function PlaygroundPage() {
           </Card>
         ))}
       </Grid>
-      <Chart />
+      {/* <Chart /> */}
     </main>
   );
 }

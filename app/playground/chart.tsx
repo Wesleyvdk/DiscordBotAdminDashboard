@@ -1,4 +1,4 @@
-'use client';
+'use server';
 
 import { Card, AreaChart, Title, Text } from '@tremor/react';
 
@@ -20,7 +20,7 @@ const data = [
   }
 ];
 
-export default function Example() {
+export default async function Example() {
   return (
     <Card className="mt-8">
       <Title>Performance</Title>

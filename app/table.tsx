@@ -11,8 +11,8 @@ import {
 interface User {
   id: number;
   name: string;
-  username: string;
-  email: string;
+  level: string;
+  exp: string;
 }
 
 export default function UsersTable({ users }: { users: User[] }) {
@@ -21,8 +21,8 @@ export default function UsersTable({ users }: { users: User[] }) {
       <TableHead>
         <TableRow>
           <TableHeaderCell>Name</TableHeaderCell>
-          <TableHeaderCell>Username</TableHeaderCell>
-          <TableHeaderCell>Email</TableHeaderCell>
+          <TableHeaderCell>Level</TableHeaderCell>
+          <TableHeaderCell>Exp</TableHeaderCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -30,10 +30,10 @@ export default function UsersTable({ users }: { users: User[] }) {
           <TableRow key={user.id}>
             <TableCell>{user.name}</TableCell>
             <TableCell>
-              <Text>{user.username}</Text>
+              <Text>{user.level}</Text>
             </TableCell>
             <TableCell>
-              <Text>{user.email}</Text>
+              <Text>{user.exp}</Text>
             </TableCell>
           </TableRow>
         ))}
