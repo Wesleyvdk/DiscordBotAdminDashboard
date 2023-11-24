@@ -1,3 +1,4 @@
+import 'server-only';
 import { Generated, Kysely } from 'kysely';
 import { PlanetScaleDialect } from 'kysely-planetscale';
 
