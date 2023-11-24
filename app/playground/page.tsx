@@ -1,7 +1,4 @@
 'use server';
-
-import { Card, Metric, Text, Title, BarList, Flex, Grid } from '@tremor/react';
-import type { GetServerSideProps } from 'next';
 import { queryBuilder } from '../../lib/planetscale';
 import CategoryCard from './categorycard';
 
@@ -29,7 +26,6 @@ export default async function PlaygroundPage() {
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
       <CategoryCard commands={commands} />
-      {/* <Chart /> */}
     </main>
   );
 }
