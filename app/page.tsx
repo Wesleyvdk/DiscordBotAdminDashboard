@@ -59,9 +59,12 @@ export default async function IndexPage({
 
   let userGuilds = await fetchUserGuilds(accessToken);
   let botGuilds = await fetchBotGuilds();
-  const commonGuilds = userGuilds.filter((userGuild: any) =>
-    botGuilds.some((botGuild: any) => botGuild.id === userGuild.id)
-  );
+  let commonGuilds;
+  if (userGuilds) {
+    commonGuilds = userGuilds.filter((userGuild: any) =>
+      botGuilds.some((botGuild: any) => botGuild.id === userGuild.id)
+    );
+  }
 
   // const leaderboard = await queryBuilder
   //   .selectFrom(guild.id)
