@@ -1,3 +1,4 @@
+'use server';
 import { queryBuilder } from '../../lib/planetscale';
 import CategoryCard from './categorycard';
 

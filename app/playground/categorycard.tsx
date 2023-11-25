@@ -45,7 +45,7 @@ export default function CategoryCard({ commands }: { commands: Command[] }) {
     })
   );
   return (
-    <Grid>
+    <Grid numItemsSm={2} numItemsLg={3} className="gap-6">
       {data.map((item) => (
         <Card key={item.category}>
           <Title>{item.category}</Title>
