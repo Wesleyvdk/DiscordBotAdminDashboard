@@ -19,13 +19,31 @@ interface CategoryData {
   data: CommandSummary[];
 }
 
-export default async function CategoryCard({
-  commands
-}: {
-  commands: Command[];
-}) {
-  const commandGroup = commands;
-  let data = await orderCategories(commandGroup);
+export default function CategoryCard({ commands }: { commands: Command[] }) {
+  const categoryMap = new Map<
+    string,
+    { totalUsage: number; commands: CommandSummary[] }
+  >();
+
+  commands.forEach((command) => {
+    if (!categoryMap.has(command.category)) {
+      categoryMap.set(command.category, { totalUsage: 0, commands: [] });
+    }
+    const categoryData = categoryMap.get(command.category);
+    categoryData?.commands.push({
+      name: command.command_name,
+      value: command.usage_count
+    });
+    categoryData!.totalUsage += command.usage_count;
+  });
+
+  const data: CategoryData[] = Array.from(categoryMap).map(
+    ([category, { totalUsage, commands }]) => ({
+      category: category,
+      stat: totalUsage.toString(),
+      data: commands
+    })
+  );
   return (
     <Grid numItemsSm={2} numItemsLg={3} className="gap-6">
       {data.map((item) => (
@@ -56,30 +74,4 @@ export default async function CategoryCard({
   );
 }
 
-async function orderCategories(commands: Command[]) {
-  const categoryMap = new Map<
-    string,
-    { totalUsage: number; commands: CommandSummary[] }
-  >();
-
-  commands.forEach((command) => {
-    if (!categoryMap.has(command.category)) {
-      categoryMap.set(command.category, { totalUsage: 0, commands: [] });
-    }
-    const categoryData = categoryMap.get(command.category);
-    categoryData?.commands.push({
-      name: command.command_name,
-      value: command.usage_count
-    });
-    categoryData!.totalUsage += command.usage_count;
-  });
-
-  const data: CategoryData[] = Array.from(categoryMap).map(
-    ([category, { totalUsage, commands }]) => ({
-      category: category,
-      stat: totalUsage.toString(),
-      data: commands
-    })
-  );
-  return data;
-}
+async function orderCategories() {}
