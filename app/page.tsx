@@ -56,12 +56,10 @@ export default async function IndexPage({
     .where('name', 'like', `%${search}%`)
     .orderBy('level', 'desc')
     .execute();
-
-  let userGuilds = await fetchUserGuilds(accessToken);
-  let botGuilds = await fetchBotGuilds();
-  let commonGuilds;
-  if (userGuilds) {
-    commonGuilds = userGuilds.filter((userGuild: any) =>
+  if (session) {
+    let userGuilds = await fetchUserGuilds(accessToken);
+    let botGuilds = await fetchBotGuilds();
+    const commonGuilds = userGuilds.filter((userGuild: any) =>
       botGuilds.some((botGuild: any) => botGuild.id === userGuild.id)
     );
   }
