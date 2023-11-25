@@ -1,14 +1,16 @@
 'use client';
 
-import { Fragment } from 'react';
+import { Fragment, Key } from 'react';
 import { usePathname } from 'next/navigation';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { signIn, signOut } from 'next-auth/react';
+import { SearchSelect, SearchSelectItem } from '@tremor/react';
 import Image from 'next/image';
 
 const navigation = [
   { name: 'Dashboard', href: '/' },
+  { name: 'leaderboard', href: '/leaderboard' },
   { name: 'Playground', href: '/playground' },
   { name: 'Shop', href: '/shop' }
 ];
@@ -17,7 +19,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Navbar({ user }: { user: any }) {
+export default async function Navbar({ user }: { user: any }) {
   const pathname = usePathname();
 
   return (

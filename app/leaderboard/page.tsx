@@ -1,10 +1,10 @@
 import { Fragment } from 'react';
 import { Card, Title, Text } from '@tremor/react';
-import Search from './search';
+import Search from '../search';
 import UsersTable from './table';
 import ServerSelection from './serverSelection';
-import { queryBuilder } from '../lib/planetscale';
-import { auth } from './auth';
+import { queryBuilder } from '../../lib/planetscale';
+import { auth } from '../auth';
 
 async function fetchBotGuilds() {
   // Similar to fetchUserGuilds, but use the bot token
