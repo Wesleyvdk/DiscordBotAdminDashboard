@@ -48,7 +48,7 @@ export default async function IndexPage({
   searchParams: { q: string };
 }) {
   const session = await auth();
-  const accessToken = session?.accessToken;
+  const accessToken = session?.accessToken ?? '';
   const search = searchParams.q ?? '';
   const VampLevels = await queryBuilder
     .selectFrom('VampLevels')
