@@ -35,7 +35,8 @@ export const {
     },
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token and user id from a provider.
-      session.accessToken = token.customToken.accessToken;
+      const customToken = token as CustomJWT;
+      session.accessToken = customToken.accessToken;
 
       return session;
     }
