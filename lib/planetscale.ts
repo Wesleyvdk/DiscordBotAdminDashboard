@@ -19,7 +19,6 @@ interface Command {
 interface Database {
     VampLevels: User;
     bot_commands: Command;
-    // https://github.com/nextauthjs/next-auth/issues/4922
 }
 
 export const queryBuilder = new Kysely<Database>({
