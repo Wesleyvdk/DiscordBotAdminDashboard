@@ -14,6 +14,17 @@ export const {
         'https://discord.com/api/oauth2/authorize?scope=identify+email+guilds'
     })
   ],
+  cookies: {
+    pkceCodeVerifier: {
+      name: 'next-auth.pkce.code_verifier',
+      options: {
+        httpOnly: true,
+        sameSite: 'none',
+        path: '/',
+        secure: true
+      }
+    }
+  },
   pages: {
     signIn: '/sign-in'
   },
@@ -22,12 +33,13 @@ export const {
     async jwt({ token, account, profile }) {
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
-        const customToken = token as unknown as CustomJWT;
-        customToken.customToken.accessToken = account.access_token;
+        const customToken = token as CustomJWT;
+        customToken.accessToken = account.access_token;
         return {
           ...token,
-          customToken,
-          accessToken: account.accessToken
+          token,
+          accessToken: customToken.accessToken
+
           // any other token properties you want to add
         };
       }
@@ -35,8 +47,8 @@ export const {
     },
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token and user id from a provider.
-      const customToken = token as unknown as CustomJWT;
-      session.accessToken = customToken.customToken.accessToken;
+      const customToken = token as CustomJWT;
+      session.accessToken = customToken.accessToken;
       return session;
     }
   }

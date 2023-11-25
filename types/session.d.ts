@@ -1,7 +1,5 @@
 interface CustomJWT {
-  customToken: {
-    accessToken?: string;
-  };
+  accessToken?: string;
 }
 
 import 'next-auth';

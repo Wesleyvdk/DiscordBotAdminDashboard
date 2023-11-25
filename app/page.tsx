@@ -77,7 +77,11 @@ export default async function IndexPage({
       <Title>Users</Title>
       <Text>A list of users retrieved from a planetscale database.</Text>
 
-      <ServerSelection commonGuilds={commonGuilds} />
+      {session?.accessToken ? (
+        <ServerSelection commonGuilds={commonGuilds} />
+      ) : (
+        <div></div>
+      )}
       <Search />
       <Card className="mt-6">
         <UsersTable users={VampLevels} />
