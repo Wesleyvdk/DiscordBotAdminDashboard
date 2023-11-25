@@ -22,8 +22,8 @@ export const {
     async jwt({ token, account, profile }) {
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
-        const customToken = token as CustomJWT;
-        customToken.accessToken = account.access_token;
+        const customToken = token as unknown as CustomJWT;
+        customToken.customToken.accessToken = account.access_token;
         return {
           ...token,
           customToken,
@@ -35,9 +35,8 @@ export const {
     },
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token and user id from a provider.
-      const customToken = token as CustomJWT;
-      session.accessToken = customToken.accessToken;
-
+      const customToken = token as unknown as CustomJWT;
+      session.accessToken = customToken.customToken.accessToken;
       return session;
     }
   }
