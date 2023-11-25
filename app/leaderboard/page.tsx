@@ -56,12 +56,14 @@ export default async function IndexPage({
     .where('name', 'like', `%${search}%`)
     .orderBy('level', 'desc')
     .execute();
-
-  let userGuilds = await fetchUserGuilds(accessToken);
-  let botGuilds = await fetchBotGuilds();
-  const commonGuilds = userGuilds.filter((userGuild: any) =>
-    botGuilds.some((botGuild: any) => botGuild.id === userGuild.id)
-  );
+  let commonGuilds;
+  if (session?.accessToken) {
+    let userGuilds = await fetchUserGuilds(accessToken);
+    let botGuilds = await fetchBotGuilds();
+    commonGuilds = userGuilds.filter((userGuild: any) =>
+      botGuilds.some((botGuild: any) => botGuild.id === userGuild.id)
+    );
+  }
 
   // const leaderboard = await queryBuilder
   //   .selectFrom(guild.id)
@@ -75,7 +77,11 @@ export default async function IndexPage({
       <Title>Users</Title>
       <Text>A list of users retrieved from a planetscale database.</Text>
 
-      <ServerSelection commonGuilds={commonGuilds} />
+      {session?.accessToken ? (
+        <ServerSelection commonGuilds={commonGuilds} />
+      ) : (
+        <div></div>
+      )}
       <Search />
       <Card className="mt-6">
         <UsersTable users={VampLevels} />
