@@ -1,15 +1,17 @@
 'use client';
 
 import { Fragment, Key } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { signIn, signOut } from 'next-auth/react';
 import { SearchSelect, SearchSelectItem } from '@tremor/react';
 import Image from 'next/image';
+import discordlogo from '../assets/discord-mark-blue.png';
 
 const navigation = [
-  { name: 'Dashboard', href: '/' },
+  { name: 'home', href: '/' },
+  { name: 'dashboard', href: '/dashboard' },
   { name: 'leaderboard', href: '/leaderboard' },
   { name: 'Playground', href: '/playground' },
   { name: 'Shop', href: '/shop' }
@@ -21,6 +23,13 @@ function classNames(...classes: string[]) {
 
 export default async function Navbar({ user }: { user: any }) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(
+      'https://discord.com/api/oauth2/authorize?client_id=894906046383017994&permissions=8&scope=bot'
+    );
+  };
 
   return (
     <Disclosure as="nav" className="bg-white shadow-sm">
@@ -78,8 +87,8 @@ export default async function Navbar({ user }: { user: any }) {
                       <Image
                         className="h-8 w-8 rounded-full"
                         src={user?.image || 'https://avatar.vercel.sh/leerob'}
-                        height={32}
-                        width={32}
+                        height={40}
+                        width={40}
                         alt={`${user?.name || 'placeholder'} avatar`}
                       />
                     </Menu.Button>
@@ -123,6 +132,45 @@ export default async function Navbar({ user }: { user: any }) {
                           )}
                         </Menu.Item>
                       )}
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
+                <Menu as="div" className="relative ml-3">
+                  <div>
+                    <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2">
+                      <span className="sr-only">Open invite bot menu</span>
+                      <Image
+                        className="h-8 w-8 rounded-full"
+                        src={discordlogo}
+                        height={40}
+                        width={40}
+                        alt={`invite bot`}
+                      />
+                    </Menu.Button>
+                  </div>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-200"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <button
+                            className={classNames(
+                              active ? 'bg-gray-100' : '',
+                              'flex w-full px-4 py-2 text-sm text-gray-700'
+                            )}
+                            onClick={handleClick}
+                          >
+                            Invite Nature Bot
+                          </button>
+                        )}
+                      </Menu.Item>
                     </Menu.Items>
                   </Transition>
                 </Menu>
