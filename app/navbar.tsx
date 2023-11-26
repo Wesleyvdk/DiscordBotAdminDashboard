@@ -5,7 +5,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { signIn, signOut } from 'next-auth/react';
-import { SearchSelect, SearchSelectItem } from '@tremor/react';
 import Image from 'next/image';
 import discordlogo from '../assets/discord-mark-blue.png';
 
@@ -125,7 +124,7 @@ export default async function Navbar({ user }: { user: any }) {
                                 active ? 'bg-gray-100' : '',
                                 'flex w-full px-4 py-2 text-sm text-gray-700'
                               )}
-                              onClick={() => signIn('discord')}
+                              onClick={() => signIn()}
                             >
                               Sign in
                             </button>
@@ -241,13 +240,28 @@ export default async function Navbar({ user }: { user: any }) {
               ) : (
                 <div className="mt-3 space-y-1">
                   <button
-                    onClick={() => signIn('github')}
+                    onClick={() => signIn('discord')}
                     className="flex w-full px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
                   >
                     Sign in
                   </button>
                 </div>
               )}
+            </div>
+            <div className="border-t border-gray-200 pt-4 pb-3">
+              <>
+                <div className="flex items-center px-4">
+                  <div className="ml-3"></div>
+                </div>
+                <div className="mt-3 space-y-1">
+                  <button
+                    onClick={handleClick}
+                    className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
+                  >
+                    Invite Nature Bot
+                  </button>
+                </div>
+              </>
             </div>
           </Disclosure.Panel>
         </>
