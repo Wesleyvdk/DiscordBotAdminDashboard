@@ -9,9 +9,9 @@ import Image from 'next/image';
 import discordlogo from '../assets/discord-mark-blue.png';
 
 const navigation = [
-  { name: 'home', href: '/' },
-  { name: 'dashboard', href: '/dashboard' },
-  { name: 'leaderboard', href: '/leaderboard' },
+  { name: 'Home', href: '/' },
+  { name: 'Dashboard', href: '/dashboard' },
+  { name: 'Leaderboard', href: '/leaderboard' },
   { name: 'Playground', href: '/playground' },
   { name: 'Shop', href: '/shop' }
 ];
@@ -23,7 +23,10 @@ function classNames(...classes: string[]) {
 export default async function Navbar({ user }: { user: any }) {
   const pathname = usePathname();
   const router = useRouter();
-
+  const noUserPages = ['Home', 'Playground'];
+  const noUserPagesItems = navigation.filter((item) =>
+    noUserPages.includes(item.name)
+  );
   const handleClick = () => {
     router.push(
       'https://discord.com/api/oauth2/authorize?client_id=894906046383017994&permissions=8&scope=bot'
@@ -60,23 +63,47 @@ export default async function Navbar({ user }: { user: any }) {
                     />
                   </svg>
                 </div>
-                <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
-                  {navigation.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className={classNames(
-                        pathname === item.href
-                          ? 'border-slate-500 text-gray-900'
-                          : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
-                        'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium'
-                      )}
-                      aria-current={pathname === item.href ? 'page' : undefined}
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
+                {user ? (
+                  <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
+                    {navigation.map((item) => (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        className={classNames(
+                          pathname === item.href
+                            ? 'border-slate-500 text-gray-900'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                          'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium'
+                        )}
+                        aria-current={
+                          pathname === item.href ? 'page' : undefined
+                        }
+                      >
+                        {item.name}
+                      </a>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
+                    {noUserPagesItems.map((item) => (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        className={classNames(
+                          pathname === item.href
+                            ? 'border-slate-500 text-gray-900'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                          'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium'
+                        )}
+                        aria-current={
+                          pathname === item.href ? 'page' : undefined
+                        }
+                      >
+                        {item.name}
+                      </a>
+                    ))}
+                  </div>
+                )}
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:items-center">
                 <Menu as="div" className="relative ml-3">

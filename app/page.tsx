@@ -1,7 +1,5 @@
-import { Fragment } from 'react';
-import { Card, Title, Text } from '@tremor/react';
-import Search from './search';
-import UsersTable from './table';
+import { Title, Text } from '@tremor/react';
+
 import ServerSelection from './serverSelection';
 import { queryBuilder } from '../lib/planetscale';
 import { auth } from './auth';
@@ -42,20 +40,10 @@ async function fetchUserGuilds(accessToken: string) {
   return guilds;
 }
 
-export default async function IndexPage({
-  searchParams
-}: {
-  searchParams: { q: string };
-}) {
+export default async function IndexPage() {
   const session = await auth();
   const accessToken = session?.accessToken ?? '';
-  const search = searchParams.q ?? '';
-  const VampLevels = await queryBuilder
-    .selectFrom('VampLevels')
-    .select(['id', 'name', 'level', 'exp'])
-    .where('name', 'like', `%${search}%`)
-    .orderBy('level', 'desc')
-    .execute();
+
   let commonGuilds;
   if (session?.accessToken) {
     let userGuilds = await fetchUserGuilds(accessToken);
@@ -74,18 +62,14 @@ export default async function IndexPage({
 
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
-      <Title>Users</Title>
-      <Text>A list of users retrieved from a planetscale database.</Text>
+      <Title>Home Page</Title>
+      <Text>this page is a work in progress</Text>
 
       {session?.accessToken ? (
         <ServerSelection commonGuilds={commonGuilds} />
       ) : (
         <div></div>
       )}
-      <Search />
-      <Card className="mt-6">
-        <UsersTable users={VampLevels} />
-      </Card>
     </main>
   );
 }
