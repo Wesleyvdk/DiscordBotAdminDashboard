@@ -15,10 +15,17 @@ interface Command {
     usage_count: number;
     last_used: Date;
 }
+interface Setting {
+    command_id: number;
+    command_name: string;
+    category: string;
+    turnedOn: boolean;
+}
 
 interface Database {
     VampLevels: User;
     bot_commands: Command;
+    Settings: Setting;
 }
 
 export const queryBuilder = new Kysely<Database>({

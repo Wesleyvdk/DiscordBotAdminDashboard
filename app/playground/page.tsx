@@ -1,10 +1,6 @@
 'use server';
 import { queryBuilder } from '../../lib/planetscale';
 import CategoryCard from './categorycard';
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore
-} from 'next/cache';
 
 interface Command {
   command_id: number;

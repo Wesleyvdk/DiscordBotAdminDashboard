@@ -18,13 +18,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full bg-gray-50">
-      <Head>
-        <title>Nature Bot Dashboard</title>
-        <meta
-          name="description"
-          content="Nature Bot's user dashboard developed by ehzgodd"
-        />
-      </Head>
       <body className="h-full">
         <Suspense>
           <Nav />

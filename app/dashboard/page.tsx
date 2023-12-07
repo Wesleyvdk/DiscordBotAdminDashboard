@@ -1,7 +1,8 @@
+'use server';
+
 import { Fragment } from 'react';
 import { Card, Title, Text } from '@tremor/react';
-import Search from '../search';
-import UsersTable from './table';
+import DashboardCard from './dashboardcard';
 import ServerSelection from '../serverSelection';
 import { queryBuilder } from '../../lib/planetscale';
 import { auth } from '../auth';
@@ -50,12 +51,6 @@ export default async function IndexPage({
   const session = await auth();
   const accessToken = session?.accessToken ?? '';
   const search = searchParams.q ?? '';
-  const VampLevels = await queryBuilder
-    .selectFrom('VampLevels')
-    .select(['id', 'name', 'level', 'exp'])
-    .where('name', 'like', `%${search}%`)
-    .orderBy('level', 'desc')
-    .execute();
   let commonGuilds;
   if (session?.accessToken) {
     let userGuilds = await fetchUserGuilds(accessToken);
@@ -64,14 +59,10 @@ export default async function IndexPage({
       botGuilds.some((botGuild: any) => botGuild.id === userGuild.id)
     );
   }
-
-  // const leaderboard = await queryBuilder
-  //   .selectFrom(guild.id)
-  //   .select(['id', 'name', 'level', 'exp'])
-  //   .where('name', 'like', `%${search}%`)
-  //   .orderBy('level', 'desc')
-  //   .execute();
-
+  const Settings = await queryBuilder
+    .selectFrom(`Settings`)
+    .select(['command_id', 'command_name', 'category', 'turnedOn'])
+    .execute();
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
       <Title>Users</Title>
@@ -82,10 +73,7 @@ export default async function IndexPage({
       ) : (
         <div></div>
       )}
-      <Search />
-      <Card className="mt-6">
-        <UsersTable users={VampLevels} />
-      </Card>
+      <DashboardCard commands={Settings} />
     </main>
   );
 }

@@ -65,6 +65,15 @@ export default async function IndexPage() {
       <Title>Home Page</Title>
       <Text>this page is a work in progress</Text>
 
+      {/* Header */}
+
+      {/* sort slogan */}
+
+      {/* Features */}
+
+      {/* Popular usage (stats: amount users, amount command usages, amount servers) */}
+
+      {/* Footer */}
       {session?.accessToken ? (
         <ServerSelection commonGuilds={commonGuilds} />
       ) : (
