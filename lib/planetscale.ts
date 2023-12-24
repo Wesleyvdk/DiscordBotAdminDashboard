@@ -21,11 +21,14 @@ interface Setting {
     category: string;
     turnedOn: boolean;
 }
+type guildIDSettings = {
+    [guildid: string]: Setting;
+}
 
 interface Database {
     VampLevels: User;
     bot_commands: Command;
-    Settings: Setting;
+    guildSettings: guildIDSettings;
 }
 
 export const queryBuilder = new Kysely<Database>({

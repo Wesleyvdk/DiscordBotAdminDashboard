@@ -74,11 +74,6 @@ export default async function IndexPage() {
       {/* Popular usage (stats: amount users, amount command usages, amount servers) */}
 
       {/* Footer */}
-      {session?.accessToken ? (
-        <ServerSelection commonGuilds={commonGuilds} />
-      ) : (
-        <div></div>
-      )}
     </main>
   );
 }

@@ -30,7 +30,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "app/warp/warpeffect.tsx"  ],
   "exclude": [
     "node_modules"
   ]

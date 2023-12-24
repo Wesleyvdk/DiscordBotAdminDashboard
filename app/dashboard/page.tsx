@@ -1,10 +1,7 @@
-'use server';
-
 import { Fragment } from 'react';
 import { Card, Title, Text } from '@tremor/react';
-import DashboardCard from './dashboardcard';
-import ServerSelection from '../serverSelection';
-import { queryBuilder } from '../../lib/planetscale';
+
+import ServerSelection from './serverSelection';
 import { auth } from '../auth';
 
 async function fetchBotGuilds() {
@@ -59,10 +56,7 @@ export default async function IndexPage({
       botGuilds.some((botGuild: any) => botGuild.id === userGuild.id)
     );
   }
-  const Settings = await queryBuilder
-    .selectFrom(`Settings`)
-    .select(['command_id', 'command_name', 'category', 'turnedOn'])
-    .execute();
+
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
       <Title>Users</Title>
@@ -73,7 +67,6 @@ export default async function IndexPage({
       ) : (
         <div></div>
       )}
-      <DashboardCard commands={Settings} />
     </main>
   );
 }
