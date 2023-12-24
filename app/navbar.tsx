@@ -27,10 +27,13 @@ export default async function Navbar({ user }: { user: any }) {
   const noUserPagesItems = navigation.filter((item) =>
     noUserPages.includes(item.name)
   );
-  const handleClick = () => {
+  const handleInvite = () => {
     router.push(
       'https://discord.com/api/oauth2/authorize?client_id=894906046383017994&permissions=8&scope=bot'
     );
+  };
+  const handleJoin = () => {
+    router.push('https://discord.gg/dX9unnGBQM');
   };
 
   return (
@@ -191,9 +194,22 @@ export default async function Navbar({ user }: { user: any }) {
                               active ? 'bg-gray-100' : '',
                               'flex w-full px-4 py-2 text-sm text-gray-700'
                             )}
-                            onClick={handleClick}
+                            onClick={handleInvite}
                           >
                             Invite Nature Bot
+                          </button>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <button
+                            className={classNames(
+                              active ? 'bg-gray-100' : '',
+                              'flex w-full px-4 py-2 text-sm text-gray-700'
+                            )}
+                            onClick={handleJoin}
+                          >
+                            Join Support Server
                           </button>
                         )}
                       </Menu.Item>
@@ -282,7 +298,7 @@ export default async function Navbar({ user }: { user: any }) {
                 </div>
                 <div className="mt-3 space-y-1">
                   <button
-                    onClick={handleClick}
+                    onClick={handleInvite}
                     className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
                   >
                     Invite Nature Bot
