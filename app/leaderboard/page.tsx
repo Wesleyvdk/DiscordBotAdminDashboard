@@ -9,7 +9,7 @@ import { auth } from '../auth';
 async function fetchBotGuilds() {
   // Similar to fetchUserGuilds, but use the bot token
   // ...
-  let botGuilds = fetch('https://discordapp.com/api/users/@me/guilds', {
+  let botGuilds = await fetch('https://discordapp.com/api/users/@me/guilds', {
     headers: {
       Authorization: 'Bot ' + process.env.DISCORD_BOT_TOKEN,
       'Content-Type': 'application/json'

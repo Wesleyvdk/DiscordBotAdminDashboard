@@ -41,17 +41,17 @@ async function fetchUserGuilds(accessToken: string) {
 }
 
 export default async function IndexPage() {
-  const session = await auth();
-  const accessToken = session?.accessToken ?? '';
+  // const session = await auth();
+  // const accessToken = session?.accessToken ?? '';
 
-  let commonGuilds;
-  if (session?.accessToken) {
-    let userGuilds = await fetchUserGuilds(accessToken);
-    let botGuilds = await fetchBotGuilds();
-    commonGuilds = userGuilds.filter((userGuild: any) =>
-      botGuilds.some((botGuild: any) => botGuild.id === userGuild.id)
-    );
-  }
+  // let commonGuilds;
+  // if (session?.accessToken) {
+  //   let userGuilds = await fetchUserGuilds(accessToken);
+  //   let botGuilds = await fetchBotGuilds();
+  //   commonGuilds = userGuilds.filter((userGuild: any) =>
+  //     botGuilds.some((botGuild: any) => botGuild.id === userGuild.id)
+  //   );
+  // }
 
   // const leaderboard = await queryBuilder
   //   .selectFrom(guild.id)
