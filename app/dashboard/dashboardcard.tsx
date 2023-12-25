@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { Switch } from '@headlessui/react';
-import { Card, Metric, Text, Title, BarList, Flex, Grid } from '@tremor/react';
-import updateSettings from './updateSettings';
+import { useEffect, useState } from "react";
+import { Switch } from "@headlessui/react";
+import { Card, Metric, Text, Title, BarList, Flex, Grid } from "@tremor/react";
+import updateSettings from "./updateSettings";
 
 interface Settings {
   id: number;
@@ -26,7 +26,7 @@ type CommandStates = {
 };
 export default async function DashboardCard({
   settings,
-  guild
+  guild,
 }: {
   settings: Settings[];
   guild: string;
@@ -40,39 +40,47 @@ export default async function DashboardCard({
     const categoryData = categoryMap.get(command.category);
     categoryData?.settings.push({
       name: command.command,
-      value: command.turnedOn
+      value: command.turnedOn,
     });
   });
 
   const data: CategoryData[] = Array.from(categoryMap).map(
     ([category, { settings }]) => ({
       category: category,
-      data: settings
+      data: settings,
     })
   );
   type CommandStates = {
     [key: string]: boolean; // or number, depending on the type of 'command.value'
   };
   const [commandState, setCommandState] = useState<CommandStates>({});
-  useEffect(()=> {
+  const [isloading, setIsLoading] = useState(true);
+  useEffect(() => {
     let initialState: CommandStates = {};
     data.forEach((item) => {
       item.data.forEach((command) => {
         initialState[command.name] = command.value;
       });
     });
-    setCommandState(initialState)
-  }, [])
- 
-
+    setCommandState(initialState);
+    setIsLoading(false);
+  }, []);
 
   const handleSwitchChange = (commandName: any, newValue: boolean) => {
     setCommandState((prevStates) => ({
       ...prevStates,
-      [commandName]: newValue
+      [commandName]: newValue,
     }));
     updateSettings(guild, newValue, commandName);
   };
+
+  if(isLoading){
+    return(
+      <div>
+        loading...
+      </div>
+    )
+  }
 
   return (
     <Grid numItemsSm={2} numItemsLg={3} className="gap-6">
