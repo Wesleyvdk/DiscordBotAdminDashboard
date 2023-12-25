@@ -60,8 +60,8 @@ export default async function DashboardCard({
       item.data.forEach((command) => {
         initialState[command.name] = command.value;
       });
-      setIsLoading(false);
     });
+    setIsLoading(false);
   });
   const [commandState, setCommandState] = useState<CommandStates>(initialState);
 
