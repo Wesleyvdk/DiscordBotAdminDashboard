@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { Fragment, useEffect, useState } from 'react';
-import { Listbox, Transition } from '@headlessui/react';
-import { Select, SelectItem, Text, Title } from '@tremor/react';
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
-import DashboardCard from './dashboardcard';
-import fetchSettings from './fetchSettings';
+import { Fragment, useEffect, useState } from "react";
+import { Listbox, Transition } from "@headlessui/react";
+import { Select, SelectItem, Text, Title } from "@tremor/react";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import DashboardCard from "./dashboardcard";
+import fetchSettings from "./fetchSettings";
 interface Setting {
   id: number;
   command: string;
@@ -14,7 +14,7 @@ interface Setting {
 }
 
 export default async function ServerSelection({
-  commonGuilds
+  commonGuilds,
 }: {
   commonGuilds: any;
 }) {
@@ -33,7 +33,7 @@ export default async function ServerSelection({
           setGuildSettings(initialSettings);
         })
         .catch((error) => {
-          console.error('Error fetching initial guild settings:', error);
+          console.error("Error fetching initial guild settings:", error);
         });
     }
   }, [commonGuilds]);
@@ -44,24 +44,26 @@ export default async function ServerSelection({
         setGuildSettings(settings);
       })
       .catch((error) => {
-        console.error('Error fetching guild settings:', error);
+        console.error("Error fetching guild settings:", error);
       });
   }, [selectedGuild]);
   return (
-    <div className="max-w-sm mx-auto space-y-6">
-      <Select
-        value={selectedGuild}
-        onValueChange={(guild) => {
-          setSelectedGuild(guild); //getServerSettings(guild)
-        }}
-        enableClear={false}
-      >
-        {commonGuilds.map((guild: any, index: string) => (
-          <SelectItem key={guild.id} value={guild}>
-            {guild.name}
-          </SelectItem>
-        ))}
-      </Select>
+    <div className="max-w-full mx-auto space-y-6">
+      <div className="max-w-sm">
+        <Select
+          value={selectedGuild}
+          onValueChange={(guild) => {
+            setSelectedGuild(guild); //getServerSettings(guild)
+          }}
+          enableClear={false}
+        >
+          {commonGuilds.map((guild: any, index: string) => (
+            <SelectItem key={guild.id} value={guild}>
+              {guild.name}
+            </SelectItem>
+          ))}
+        </Select>
+      </div>
       <Title>{selectedGuild.name}</Title>
       {guildSettings ? (
         <DashboardCard settings={guildSettings} guild={selectedGuild.id} />
