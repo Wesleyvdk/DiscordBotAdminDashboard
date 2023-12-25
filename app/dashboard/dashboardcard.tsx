@@ -70,7 +70,7 @@ export default async function DashboardCard({
   };
 
   return (
-    <Grid numItemsSm={2} numItemsLg={3} className="gap-6">
+    <Grid numItemsSm={2} numItemsLg={3} className="max-w-full gap-6">
       {data.map((item) => (
         <Card key={item.category}>
           <Title>{item.category}</Title>
@@ -81,7 +81,7 @@ export default async function DashboardCard({
               <Flex
                 justifyContent="start"
                 alignItems="baseline"
-                className="space-x-2 ml-3"
+                className="space-x-2 ml-8"
               >
                 <Switch
                   key={command.name}
