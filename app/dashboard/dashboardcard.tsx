@@ -54,8 +54,8 @@ export default async function DashboardCard({
     [key: string]: boolean; // or number, depending on the type of 'command.value'
   };
   const [isLoading, setIsLoading] = useState(true);
+  let initialState: CommandStates = {};
   useEffect(() => {
-    let initialState: CommandStates = {};
     data.forEach((item) => {
       item.data.forEach((command) => {
         initialState[command.name] = command.value;
