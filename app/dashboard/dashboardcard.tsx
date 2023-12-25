@@ -53,13 +53,18 @@ export default async function DashboardCard({
   type CommandStates = {
     [key: string]: boolean; // or number, depending on the type of 'command.value'
   };
-  let initialState: CommandStates = {};
-  data.forEach((item) => {
-    item.data.forEach((command) => {
-      initialState[command.name] = command.value;
+  const [commandState, setCommandState] = useState<CommandStates>({});
+  useEffect(()=> {
+    let initialState: CommandStates = {};
+    data.forEach((item) => {
+      item.data.forEach((command) => {
+        initialState[command.name] = command.value;
+      });
     });
-  });
-  const [commandState, setCommandState] = useState<CommandStates>(initialState);
+    setCommandState(initialState)
+  }, [])
+ 
+
 
   const handleSwitchChange = (commandName: any, newValue: boolean) => {
     setCommandState((prevStates) => ({
@@ -70,7 +75,7 @@ export default async function DashboardCard({
   };
 
   return (
-    <Grid numItemsSm={2} numItemsLg={4} className="gap-6">
+    <Grid numItemsSm={2} numItemsLg={3} className="gap-6">
       {data.map((item) => (
         <Card key={item.category}>
           <Title>{item.category}</Title>
