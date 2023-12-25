@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Switch } from "@headlessui/react";
-import { Card, Metric, Text, Title, BarList, Flex, Grid } from "@tremor/react";
+// import { Switch } from "@headlessui/react";
+import { Card, Metric, Text, Title, BarList, Flex, Grid, Switch } from "@tremor/react";
 import updateSettings from "./updateSettings";
 
 interface Settings {
