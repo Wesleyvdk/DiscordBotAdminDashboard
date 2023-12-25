@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { Switch } from '@headlessui/react';
-import { Card, Metric, Text, Title, BarList, Flex, Grid } from '@tremor/react';
-import updateSettings from './updateSettings';
+import { useEffect, useState } from "react";
+import { Switch } from "@headlessui/react";
+import { Card, Metric, Text, Title, BarList, Flex, Grid } from "@tremor/react";
+import updateSettings from "./updateSettings";
 
 interface Settings {
   id: number;
@@ -26,7 +26,7 @@ type CommandStates = {
 };
 export default async function DashboardCard({
   settings,
-  guild
+  guild,
 }: {
   settings: Settings[];
   guild: string;
@@ -40,14 +40,14 @@ export default async function DashboardCard({
     const categoryData = categoryMap.get(command.category);
     categoryData?.settings.push({
       name: command.command,
-      value: command.turnedOn
+      value: command.turnedOn,
     });
   });
 
   const data: CategoryData[] = Array.from(categoryMap).map(
     ([category, { settings }]) => ({
       category: category,
-      data: settings
+      data: settings,
     })
   );
   type CommandStates = {
@@ -64,7 +64,7 @@ export default async function DashboardCard({
   const handleSwitchChange = (commandName: any, newValue: boolean) => {
     setCommandState((prevStates) => ({
       ...prevStates,
-      [commandName]: newValue
+      [commandName]: newValue,
     }));
     updateSettings(guild, newValue, commandName);
   };
@@ -74,10 +74,11 @@ export default async function DashboardCard({
       {data.map((item) => (
         <Card key={item.category}>
           <Title>{item.category}</Title>
-
           {item.data.map((command) => (
-            <Flex key={command.name} className="mt-6">
-              <Text>{command.name}</Text>
+            <div>
+              <Flex key={command.name} className="mt-6">
+                <Text>{command.name}</Text>
+              </Flex>
               <Flex
                 justifyContent="start"
                 alignItems="baseline"
@@ -95,7 +96,7 @@ export default async function DashboardCard({
                   <span className="inline-block h-4 w-4 transform rounded-full bg-white transition ui-checked:translate-x-6 ui-not-checked:translate-x-1" />
                 </Switch>
               </Flex>
-            </Flex>
+            </div>
           ))}
         </Card>
       ))}
