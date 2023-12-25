@@ -81,7 +81,7 @@ export default async function DashboardCard({
               <Flex
                 justifyContent="start"
                 alignItems="baseline"
-                className="space-x-2"
+                className="space-x-2 ml-3"
               >
                 <Switch
                   key={command.name}
@@ -89,7 +89,7 @@ export default async function DashboardCard({
                   onChange={(newValue) =>
                     handleSwitchChange(command.name, newValue)
                   }
-                  className="relative inline-flex h-6 w-11 ml-3 items-center rounded-full ui-checked:bg-blue-600 ui-not-checked:bg-gray-200 right-0"
+                  className="relative inline-flex h-6 w-11 items-center rounded-full ui-checked:bg-blue-600 ui-not-checked:bg-gray-200 right-0"
                 >
                   <span className="sr-only">Enable command</span>
                   <span className="inline-block h-4 w-4 transform rounded-full bg-white transition ui-checked:translate-x-6 ui-not-checked:translate-x-1" />
