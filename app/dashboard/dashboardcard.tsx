@@ -54,7 +54,7 @@ export default async function DashboardCard({
     [key: string]: boolean; // or number, depending on the type of 'command.value'
   };
   let initialState: CommandStates = {};
-  data.forEach((item) => {
+  await data.forEach((item) => {
     item.data.forEach((command) => {
       initialState[command.name] = command.value;
     });
@@ -81,7 +81,7 @@ export default async function DashboardCard({
               <Flex
                 justifyContent="start"
                 alignItems="baseline"
-                className="space-x-2"
+                className="space-x-2 max-w-xs"
               >
                 <Switch
                   key={command.name}
@@ -89,7 +89,7 @@ export default async function DashboardCard({
                   onChange={(newValue) =>
                     handleSwitchChange(command.name, newValue)
                   }
-                  className="relative inline-flex h-6 w-11 items-center rounded-full ui-checked:bg-blue-600 ui-not-checked:bg-gray-200 right-0"
+                  className="relative inline-flex h-6 w-11 items-center rounded-full ui-checked:bg-blue-600 ui-not-checked:bg-gray-200"
                 >
                   <span className="sr-only">Enable command</span>
                   <span className="inline-block h-4 w-4 transform rounded-full bg-white transition ui-checked:translate-x-6 ui-not-checked:translate-x-1" />
