@@ -75,8 +75,8 @@ export default async function DashboardCard({
         <Card key={item.category}>
           <Title>{item.category}</Title>
           {item.data.map((command) => (
-            <div>
-              <Flex key={command.name} className="mt-6">
+            <div key={command.name}>
+              <Flex className="mt-6">
                 <Text>{command.name}</Text>
               </Flex>
               <Flex
