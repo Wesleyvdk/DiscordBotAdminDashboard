@@ -70,7 +70,7 @@ export default async function DashboardCard({
   };
 
   return (
-    <Grid numItemsSm={2} numItemsLg={3} className="gap-6">
+    <Grid numItemsSm={2} numItemsLg={4} className="gap-6">
       {data.map((item) => (
         <Card key={item.category}>
           <Title>{item.category}</Title>
@@ -79,7 +79,7 @@ export default async function DashboardCard({
             <Flex key={command.name} className="mt-6">
               <Text>{command.name}</Text>
               <Flex
-                justifyContent="start"
+                justifyContent="end"
                 alignItems="baseline"
                 className="space-x-2"
               >
@@ -89,7 +89,7 @@ export default async function DashboardCard({
                   onChange={(newValue) =>
                     handleSwitchChange(command.name, newValue)
                   }
-                  className="relative inline-flex h-6 w-11 items-center rounded-full ui-checked:bg-blue-600 ui-not-checked:bg-gray-200 self-end"
+                  className="relative inline-flex h-6 w-11 items-center rounded-full ui-checked:bg-blue-600 ui-not-checked:bg-gray-200 "
                 >
                   <span className="sr-only">Enable command</span>
                   <span className="inline-block h-4 w-4 transform rounded-full bg-white transition ui-checked:translate-x-6 ui-not-checked:translate-x-1" />
