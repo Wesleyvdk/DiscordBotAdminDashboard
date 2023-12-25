@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-// import { Switch } from "@headlessui/react";
-import { Card, Metric, Text, Title, BarList, Flex, Grid, Switch } from "@tremor/react";
+import { Switch } from "@headlessui/react";
+import { Card, Metric, Text, Title, BarList, Flex, Grid } from "@tremor/react"; //Switch 
 import updateSettings from "./updateSettings";
 
 interface Settings {
@@ -54,7 +54,7 @@ export default async function DashboardCard({
     [key: string]: boolean; // or number, depending on the type of 'command.value'
   };
   const [commandState, setCommandState] = useState<CommandStates>({});
-  const [isloading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     let initialState: CommandStates = {};
     data.forEach((item) => {
