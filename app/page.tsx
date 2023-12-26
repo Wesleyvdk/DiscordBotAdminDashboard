@@ -70,6 +70,7 @@ export default async function IndexPage() {
       {/* sort slogan */}
 
       {/* Features */}
+      <Title>Features</Title>
 
       {/* Popular usage (stats: amount users, amount command usages, amount servers) */}
 
